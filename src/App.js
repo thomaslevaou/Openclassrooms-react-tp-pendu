@@ -1,11 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+
+
+/** @author TLV 27/12/2020
+* @brief Réalisation du jeu du pendu, proposé en TP par OpenClassrooms dans le cadre
+*       de la formation sur React.js
+*/
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
