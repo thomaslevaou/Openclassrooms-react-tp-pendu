@@ -17,7 +17,7 @@ class App extends Component {
   *        contenant la liste des lettres entrées par l'utilisateur. */
   state = {
     word: this.pickRandomWord(),
-    usedLetters: new Set()
+    usedLetters: new Set([])
   }
 
   // Sélection d'un mot aléatoire dans la liste
@@ -34,8 +34,18 @@ class App extends Component {
   render () {
     const {word, usedLetters} = this.state
     return (
-      <div>
-        { this.computeDisplay(word, usedLetters) }
+      <div className="mainContent">
+        <div className="gameTitle">
+          Jeu du Pendu
+        </div>
+        <div className="rules">
+          Tapez une lettre au clavier pour vérifier si elle fait partie du mot caché ci-dessous. <br/>
+          En cas d'erreur, un pendu va peu à peu être dessiné !
+        </div>
+        <div className="lettersToGuess">
+          { this.computeDisplay(word, usedLetters) }
+        </div>
+        {usedLetters.size > 0 && <div className="usedLetters">Lettres déjà utilisées : </div>}
       </div>
     )
   }
