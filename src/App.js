@@ -9,6 +9,7 @@ const WORDS = ['TELEPHONE', 'CASQUE', 'ORDINATEUR', 'SOURIS', 'CHAT', 'CHIEN', '
 * @details Voir le Readme pour la spec détaillée
 */
 
+const MAX_ATTEMPT_BEFORE_LOST = 10;
 
 class App extends Component {
 
@@ -21,7 +22,8 @@ class App extends Component {
     usedLetters: new Set([]),
     word: this.pickRandomWord(),
     letterValue: '',
-    attemptsNumber: 0
+    attemptsNumber: 0,
+    failedAttemptsNumber: 0
   }
 
   hiddenWord = this.computeDisplay(this.state.word, this.state.usedLetters)
@@ -42,18 +44,34 @@ class App extends Component {
   }
 
   checkIfLetterInName = event => {
-    let { usedLetters, attemptsNumber } = this.state
-    let letter = event.target.value.replace(/[^a-zA-Z]/, '').toUpperCase()
+    if (!this.isWon() && !this.isLost()) {
+      let { word, usedLetters, attemptsNumber, failedAttemptsNumber } = this.state
+      let letter = event.target.value.replace(/[^a-zA-Z]/, '').toUpperCase()
 
-    const newAttemptNumber = attemptsNumber + 1
-    this.setState({ attemptsNumber: newAttemptNumber })
-    if (!usedLetters.has(letter)) {
-      usedLetters.add(letter)
-      this.setState({ usedLetters: usedLetters })
-      this.hiddenWord = this.computeDisplay(this.state.word, usedLetters)
-    } else {
-      alert('Cette lettre a déjà été utilisée. Veuillez en saisir une autre')
+      const newAttemptNumber = attemptsNumber + 1
+      const newFailedAttemptsNumber = failedAttemptsNumber + 1
+      this.setState({ attemptsNumber: newAttemptNumber })
+      if (!usedLetters.has(letter)) {
+        usedLetters.add(letter)
+        this.setState({ usedLetters: usedLetters })
+        if (word.includes(letter)) {
+          this.hiddenWord = this.computeDisplay(word, usedLetters)
+        } else {
+          this.setState({ failedAttemptsNumber: newFailedAttemptsNumber })
+        }
+      } else {
+        alert('Cette lettre a déjà été utilisée. Veuillez en saisir une autre')
+        this.setState({ failedAttemptsNumber: newFailedAttemptsNumber })
+      }
     }
+  }
+
+  isWon () {
+    return this.hiddenWord.replace(/\s/g, '') === this.state.word
+  }
+
+  isLost () {
+    return this.state.failedAttemptsNumber === MAX_ATTEMPT_BEFORE_LOST
   }
 
   keepFocus () {
@@ -62,9 +80,10 @@ class App extends Component {
 
   render () {
     // Cast from Set to Array mandatory for showing through map in JSX
-    const {usedLetters, word, attemptsNumber} = this.state
+    const {usedLetters, attemptsNumber, failedAttemptsNumber} = this.state
     const usedLettersArray = Array.from(this.state.usedLetters)
-    const won = this.hiddenWord.replace(/\s/g, '') === word
+    const won = this.isWon()
+    const lost = this.isLost()
     return (
       <div className="mainContent" onClick={this.keepFocus.bind(this)}>
         <div className="gameTitle">
@@ -84,11 +103,13 @@ class App extends Component {
           ))}
           </div>}
           <br/>
-        <div>Nombre d'entrées utilisateur pour ce mot : { this.state.attemptsNumber }</div>
+        <div>Nombre d'entrées utilisateur pour ce mot : { attemptsNumber }</div>
+        <div>Nombre d'entrées ayant échoué pour ce mot : { failedAttemptsNumber }</div>
         <br/>
         { won && <div>Bravo ! Vous avez gagné. </div>}
+        { lost && <div>Oh non ! Vous avez perdu. </div>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
-               ref={this.letterInput}  onChange={this.checkIfLetterInName} autoFocus />
+               ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
     )
   }
