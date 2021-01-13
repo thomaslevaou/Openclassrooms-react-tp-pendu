@@ -62,7 +62,9 @@ class App extends Component {
 
   render () {
     // Cast from Set to Array mandatory for showing through map in JSX
-    const usedLetters = Array.from(this.state.usedLetters)
+    const {usedLetters, word, attemptsNumber} = this.state
+    const usedLettersArray = Array.from(this.state.usedLetters)
+    const won = this.hiddenWord.replace(/\s/g, '') === word
     return (
       <div className="mainContent" onClick={this.keepFocus.bind(this)}>
         <div className="gameTitle">
@@ -75,14 +77,16 @@ class App extends Component {
         <div className="lettersToGuess">
           { this.hiddenWord }
         </div>
-        {usedLetters.length > 0 &&
+        {usedLettersArray.length > 0 &&
           <div className="usedLetters">Lettres déjà utilisées :
-          {usedLetters.map(letter => (
+          {usedLettersArray.map(letter => (
             <span key={letter}> {letter}</span>
           ))}
           </div>}
           <br/>
         <div>Nombre d'entrées utilisateur pour ce mot : { this.state.attemptsNumber }</div>
+        <br/>
+        { won && <div>Bravo ! Vous avez gagné. </div>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput}  onChange={this.checkIfLetterInName} autoFocus />
       </div>
