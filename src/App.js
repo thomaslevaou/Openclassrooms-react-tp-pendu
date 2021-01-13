@@ -20,7 +20,8 @@ class App extends Component {
   state = {
     usedLetters: new Set([]),
     word: this.pickRandomWord(),
-    letterValue: ''
+    letterValue: '',
+    attemptsNumber: 0
   }
 
   hiddenWord = this.computeDisplay(this.state.word, this.state.usedLetters)
@@ -41,9 +42,11 @@ class App extends Component {
   }
 
   checkIfLetterInName = event => {
-    let { usedLetters } = this.state
+    let { usedLetters, attemptsNumber } = this.state
     let letter = event.target.value.replace(/[^a-zA-Z]/, '').toUpperCase()
 
+    const newAttemptNumber = attemptsNumber + 1
+    this.setState({ attemptsNumber: newAttemptNumber })
     if (!usedLetters.has(letter)) {
       usedLetters.add(letter)
       this.setState({ usedLetters: usedLetters })
@@ -63,7 +66,7 @@ class App extends Component {
     return (
       <div className="mainContent" onClick={this.keepFocus.bind(this)}>
         <div className="gameTitle">
-          Jeu du Pendu { this.state.word }
+          Jeu du Pendu
         </div>
         <div className="rules">
           Tapez une lettre au clavier pour vérifier si elle fait partie du mot caché ci-dessous. <br/>
@@ -78,6 +81,8 @@ class App extends Component {
             <span key={letter}> {letter}</span>
           ))}
           </div>}
+          <br/>
+        <div>Nombre d'entrées utilisateur pour ce mot : { this.state.attemptsNumber }</div>
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput}  onChange={this.checkIfLetterInName} autoFocus />
       </div>
