@@ -54,7 +54,6 @@ class App extends Component {
   }
 
   keepFocus () {
-    console.log('keeping focus...')
     this.letterInput.current.focus()
   }
 
