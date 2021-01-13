@@ -8,6 +8,9 @@ A l'affichage de la page web, l'utilisateur peut saisir des lettres au clavier,
 et en cas d'erreur, un pendu sera peu à peu dessiné au canvas.
 Si l'utilisateur saisit une lettre déjà saisie, un message en rouge sera
 affiché à l'utilisateur.
+Si l'utilisateur saisit une lettre présente dans le mot sélectionné, alors celle-ci
+sera affichée à l'écran à ou aux emplacements correspondants de la lettre dans le mot
+(comme dans un jeu de pendu habituel).
 
 La liste des lettres déjà entrées sera affichée et visible pour l'utilisateur.
 Le nombre d'essais va être stocké et affiché à l'écran.

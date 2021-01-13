@@ -1,5 +1,10 @@
+body, html, #root {
+  height: 100%;
+}
+
 .mainContent {
   text-align: center;
+  height: 100%;
 }
 
 .gameTitle {
@@ -18,4 +23,10 @@
 
 .usedLetters {
   margin-top: 40px;
+}
+
+.invisibleTextInput {
+  margin-left: -200%;
+  border-color: #fff;
+  color: #fff;
 }

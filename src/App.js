@@ -8,18 +8,27 @@ const WORDS = ['TELEPHONE', 'CASQUE', 'ORDINATEUR', 'SOURIS', 'CHAT', 'CHIEN', '
 *       de la formation sur React.js
 * @details Voir le Readme pour la spec détaillée
 */
+
+
 class App extends Component {
 
-  /** @brief state de notre jeu de pendu
+  /** @brief state par défaut de notre jeu de pendu
   * @param word phrase est en state, car il peut changer si l'utilisateur décide
   *        de relancer une partie.
   * @param usedLetters est un Set (càd un tableau où chaque valeur doit être unique)
   *        contenant la liste des lettres entrées par l'utilisateur. */
   state = {
+    usedLetters: new Set([]),
     word: this.pickRandomWord(),
-    usedLetters: new Set([])
+    letterValue: ''
   }
 
+  hiddenWord = this.computeDisplay(this.state.word, this.state.usedLetters)
+
+  constructor () {
+    super();
+    this.letterInput = React.createRef();
+  }
   // Sélection d'un mot aléatoire dans la liste
   pickRandomWord () {
     return WORDS[Math.floor(Math.random() * WORDS.length)]
@@ -31,21 +40,41 @@ class App extends Component {
     return phrase.replace(/\w/g, (letter) => (usedLetters.has(letter) ? ' ' + letter + ' ' : ' _ '))
   }
 
+  checkIfLetterInName = event => {
+    let { usedLetters } = this.state
+    let letter = event.target.value.replace(/[^a-zA-Z]/, '').toUpperCase()
+
+    if (!usedLetters.has(letter)) {
+      usedLetters.add(letter)
+      this.setState({ usedLetters: usedLetters })
+      this.hiddenWord = this.computeDisplay(this.state.word, usedLetters)
+    } else {
+      alert('Cette lettre a déjà été utilisée. Veuillez en saisir une autre')
+    }
+  }
+
+  keepFocus () {
+    console.log('keeping focus...')
+    this.letterInput.current.focus()
+  }
+
   render () {
     const {word, usedLetters} = this.state
     return (
-      <div className="mainContent">
+      <div className="mainContent" onClick={this.keepFocus.bind(this)}>
         <div className="gameTitle">
-          Jeu du Pendu
+          Jeu du Pendu { word }
         </div>
         <div className="rules">
           Tapez une lettre au clavier pour vérifier si elle fait partie du mot caché ci-dessous. <br/>
           En cas d'erreur, un pendu va peu à peu être dessiné !
         </div>
         <div className="lettersToGuess">
-          { this.computeDisplay(word, usedLetters) }
+          { this.hiddenWord }
         </div>
         {usedLetters.size > 0 && <div className="usedLetters">Lettres déjà utilisées : </div>}
+        <input type="text" className="invisibleTextInput" value={this.state.letterValue}
+               ref={this.letterInput}  onChange={this.checkIfLetterInName} autoFocus />
       </div>
     )
   }
