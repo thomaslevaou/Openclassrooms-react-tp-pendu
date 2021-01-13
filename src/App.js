@@ -74,6 +74,7 @@ class App extends Component {
     return this.state.failedAttemptsNumber === MAX_ATTEMPT_BEFORE_LOST
   }
 
+  // Pour garder le focus même si l'utilisateur clique sur la page
   keepFocus () {
     this.letterInput.current.focus()
   }
