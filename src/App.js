@@ -82,7 +82,7 @@ class App extends Component {
   render () {
     // Cast from Set to Array mandatory for showing through map in JSX
     const {usedLetters, attemptsNumber, failedAttemptsNumber} = this.state
-    const usedLettersArray = Array.from(this.state.usedLetters)
+    const usedLettersArray = Array.from(usedLetters)
     const won = this.isWon()
     const lost = this.isLost()
     return (
@@ -107,8 +107,10 @@ class App extends Component {
         <div>Nombre d'entrées utilisateur pour ce mot : { attemptsNumber }</div>
         <div>Nombre d'entrées ayant échoué pour ce mot : { failedAttemptsNumber }</div>
         <br/>
-        { won && <div>Bravo ! Vous avez gagné. </div>}
+        { won && <div>Bravo ! Vous avez gagné. </div>}
         { lost && <div>Oh non ! Vous avez perdu. </div>}
+        { (won || lost) && <div><br/> Cliquez sur le bouton suivant pour recommencer une partie : <br/>
+          <button type="submit" className="btn btn-lg formButton">Recommencer une partie</button></div>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
