@@ -11,6 +11,19 @@ const WORDS = ['TELEPHONE', 'CASQUE', 'ORDINATEUR', 'SOURIS', 'CHAT', 'CHIEN', '
 
 const MAX_ATTEMPT_BEFORE_LOST = 10;
 
+const IMG_LIST = {
+  1 : 'images/pendu_1.png',
+  2 : 'images/pendu_2.png',
+  3 : 'images/pendu_3.png',
+  4 : 'images/pendu_4.png',
+  5 : 'images/pendu_5.png',
+  6 : 'images/pendu_6.png',
+  7 : 'images/pendu_7.png',
+  8 : 'images/pendu_8.png',
+  9 : 'images/pendu_9.png',
+  10 : 'images/pendu_10.png'
+}
+
 class App extends Component {
 
   buildState = () => ({
@@ -132,6 +145,7 @@ class App extends Component {
         { lost && <div>Oh non ! Vous avez perdu. </div>}
         { (won || lost) && <div><br/> Cliquez sur le bouton suivant pour recommencer une partie : <br/>
           <button type="submit" className="btn btn-lg formButton" onClick={this.resetGame}>Recommencer une partie</button></div>}
+        { (failedAttemptsNumber > 0) && <img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"/>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
