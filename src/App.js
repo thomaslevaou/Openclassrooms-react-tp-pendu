@@ -1,5 +1,15 @@
 import React, { Component } from 'react'
 import './App.css';
+import pendu1 from './images/pendu_1.png'
+import pendu2 from './images/pendu_2.png'
+import pendu3 from './images/pendu_3.png'
+import pendu4 from './images/pendu_4.png'
+import pendu5 from './images/pendu_5.png'
+import pendu6 from './images/pendu_6.png'
+import pendu7 from './images/pendu_7.png'
+import pendu8 from './images/pendu_8.png'
+import pendu9 from './images/pendu_9.png'
+import pendu10 from './images/pendu_10.png'
 
 const WORDS = ['TELEPHONE', 'CASQUE', 'ORDINATEUR', 'SOURIS', 'CHAT', 'CHIEN', 'GALETTE', 'SPAGHETTI']
 
@@ -12,16 +22,16 @@ const WORDS = ['TELEPHONE', 'CASQUE', 'ORDINATEUR', 'SOURIS', 'CHAT', 'CHIEN', '
 const MAX_ATTEMPT_BEFORE_LOST = 10;
 
 const IMG_LIST = {
-  1 : 'images/pendu_1.png',
-  2 : 'images/pendu_2.png',
-  3 : 'images/pendu_3.png',
-  4 : 'images/pendu_4.png',
-  5 : 'images/pendu_5.png',
-  6 : 'images/pendu_6.png',
-  7 : 'images/pendu_7.png',
-  8 : 'images/pendu_8.png',
-  9 : 'images/pendu_9.png',
-  10 : 'images/pendu_10.png'
+  1 : pendu1,
+  2 : pendu2,
+  3 : pendu3,
+  4 : pendu4,
+  5 : pendu5,
+  6 : pendu6,
+  7 : pendu7,
+  8 : pendu8,
+  9 : pendu9,
+  10 : pendu10
 }
 
 class App extends Component {
@@ -139,13 +149,15 @@ class App extends Component {
           </div>}
           <br/>
         <div>Nombre d'entrées utilisateur pour ce mot : { attemptsNumber }</div>
-        <div>Nombre d'entrées ayant échoué pour ce mot : { failedAttemptsNumber }</div>
         <br/>
         { won && <div>Bravo ! Vous avez gagné. </div>}
         { lost && <div>Oh non ! Vous avez perdu. </div>}
         { (won || lost) && <div><br/> Cliquez sur le bouton suivant pour recommencer une partie : <br/>
           <button type="submit" className="btn btn-lg formButton" onClick={this.resetGame}>Recommencer une partie</button></div>}
-        { (failedAttemptsNumber > 0) && <img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"/>}
+        { (failedAttemptsNumber > 0) && <div class="">
+                                          <img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"
+                                                height="200px" width="200px"/>
+                                        </div>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
