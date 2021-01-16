@@ -146,8 +146,8 @@ class App extends Component {
         { lost && <div>Oh non ! Vous avez perdu. </div>}
         { (won || lost) && <div><br/> Cliquez sur le bouton suivant pour recommencer une partie : <br/>
           <button type="submit" className="btn btn-lg formButton" onClick={this.resetGame}>Recommencer une partie</button></div>}
-        { (failedAttemptsNumber > 0) && <img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"
-                                                height="200px" width="200px"/>}
+        { (failedAttemptsNumber > 0) && <div><img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"
+                                                height="200px" width="200px" /></div>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
