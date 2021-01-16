@@ -24,3 +24,12 @@ correspondant sera également affiché à l'utilisateur.
 
 Que la partie soit gagnée ou perdue, un bouton pour recommencer la partie
 sera affiché à l'utilisateur, et permettra de recommencer une partie.
+
+Pour exécuter le code de ce projet, il suffit de le cloner, puis d'entrer les commandes suivantes à la racine du projet
+(en supposant que React.js et Node.js sont déjà installés) :
+```
+npm install
+npm start
+```
+
+Ce qui permet d'afficher le résultat du projet dans le navigateur Web, à l'adresse http://localhost:3000/.
