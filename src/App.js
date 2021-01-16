@@ -35,15 +35,7 @@ const IMG_LIST = {
 }
 
 class App extends Component {
-
-  buildState = () => ({
-      usedLetters: new Set([]),
-      word: this.pickRandomWord(),
-      letterValue: '',
-      attemptsNumber: 0,
-      failedAttemptsNumber: 0
-  })
-
+  
   /** @brief state par défaut de notre jeu de pendu
   * @param word phrase est en state, car il peut changer si l'utilisateur décide
   *        de relancer une partie.
