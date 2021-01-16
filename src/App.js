@@ -35,7 +35,7 @@ const IMG_LIST = {
 }
 
 class App extends Component {
-  
+
   /** @brief state par défaut de notre jeu de pendu
   * @param word phrase est en state, car il peut changer si l'utilisateur décide
   *        de relancer une partie.
@@ -146,10 +146,8 @@ class App extends Component {
         { lost && <div>Oh non ! Vous avez perdu. </div>}
         { (won || lost) && <div><br/> Cliquez sur le bouton suivant pour recommencer une partie : <br/>
           <button type="submit" className="btn btn-lg formButton" onClick={this.resetGame}>Recommencer une partie</button></div>}
-        { (failedAttemptsNumber > 0) && <div class="">
-                                          <img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"
-                                                height="200px" width="200px"/>
-                                        </div>}
+        { (failedAttemptsNumber > 0) && <img src={IMG_LIST[failedAttemptsNumber]} alt="Illustration du pendu"
+                                                height="200px" width="200px"/>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
