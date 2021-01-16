@@ -56,7 +56,7 @@ class App extends Component {
     this.letterInput = React.createRef();
   }
 
-  // Arrow function for binding
+  // Arrow function for binding with props in the JSX
   resetGame = () => {
     let randomWord = this.pickRandomWord()
     let usedLetters = new Set([])
@@ -79,6 +79,7 @@ class App extends Component {
     return phrase.replace(/\w/g, (letter) => (usedLetters.has(letter) ? ' ' + letter + ' ' : ' _ '))
   }
 
+  // Arrow function for binding with props in the JSX
   checkIfLetterInName = event => {
     if (!this.isWon() && !this.isLost()) {
       let { word, usedLetters, attemptsNumber, failedAttemptsNumber } = this.state
@@ -111,7 +112,8 @@ class App extends Component {
   }
 
   // Pour garder le focus même si l'utilisateur clique sur la page
-  keepFocus () {
+  // Arrow function for binding with props in the JSX
+  keepFocus = () => {
     this.letterInput.current.focus()
   }
 
@@ -122,7 +124,7 @@ class App extends Component {
     const won = this.isWon()
     const lost = this.isLost()
     return (
-      <div className="mainContent" onClick={this.keepFocus.bind(this)}>
+      <div className="mainContent" onClick={this.keepFocus}>
         <div className="gameTitle">
           Jeu du Pendu
         </div>
