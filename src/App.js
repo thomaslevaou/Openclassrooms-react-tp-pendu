@@ -13,6 +13,14 @@ const MAX_ATTEMPT_BEFORE_LOST = 10;
 
 class App extends Component {
 
+  buildState = () => ({
+      usedLetters: new Set([]),
+      word: this.pickRandomWord(),
+      letterValue: '',
+      attemptsNumber: 0,
+      failedAttemptsNumber: 0
+  })
+
   /** @brief state par défaut de notre jeu de pendu
   * @param word phrase est en state, car il peut changer si l'utilisateur décide
   *        de relancer une partie.
@@ -32,6 +40,19 @@ class App extends Component {
     super();
     this.letterInput = React.createRef();
   }
+
+  // Arrow function for binding
+  resetGame = () => {
+    let randomWord = this.pickRandomWord()
+    let usedLetters = new Set([])
+    this.setState(() => ({ usedLetters: usedLetters,
+        word: randomWord,
+        letterValue: '',
+        attemptsNumber: 0,
+        failedAttemptsNumber: 0 }))
+    this.hiddenWord = this.computeDisplay(randomWord, usedLetters)
+  }
+
   // Sélection d'un mot aléatoire dans la liste
   pickRandomWord () {
     return WORDS[Math.floor(Math.random() * WORDS.length)]
@@ -110,7 +131,7 @@ class App extends Component {
         { won && <div>Bravo ! Vous avez gagné. </div>}
         { lost && <div>Oh non ! Vous avez perdu. </div>}
         { (won || lost) && <div><br/> Cliquez sur le bouton suivant pour recommencer une partie : <br/>
-          <button type="submit" className="btn btn-lg formButton">Recommencer une partie</button></div>}
+          <button type="submit" className="btn btn-lg formButton" onClick={this.resetGame}>Recommencer une partie</button></div>}
         <input type="text" className="invisibleTextInput" value={this.state.letterValue}
                ref={this.letterInput} onChange={this.checkIfLetterInName} autoFocus />
       </div>
